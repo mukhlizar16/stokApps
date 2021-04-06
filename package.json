@@ -1,0 +1,10 @@
+{
+  "name": "syabab",
+  "version": "1.0.0",
+  "dependencies": {
+  },
+  "scripts": {
+	"sass": "sass assets/backend/sass/assets/main.scss assets/backend/css/main.css --watch",
+	"sass1": "sass assets/backend/sass/assets/structure.scss assets/backend/css/structure.css --watch"
+  }
+}
