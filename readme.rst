@@ -68,3 +68,9 @@ Acknowledgement
 
 The CodeIgniter team would like to thank EllisLab, all the
 contributors to the CodeIgniter project and you, the CodeIgniter user.
+
+***************
+Author
+***************
+
+This apps develop by Mie Syabab corporation under control by mukhlizar.
