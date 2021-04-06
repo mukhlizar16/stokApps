@@ -133,6 +133,75 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	public function supplier()
+	{
+		$data = [
+			'title' => 'Admin / Supplier',
+			'breadcrumb' => 'Supplier',
+		];
+
+		$data['supplier'] = $this->Admin_model->get_supplierData();
+		$this->template->load('backend/template/master', 'backend/admin/supplier', $data, false);
+	}
+
+	public function tambah_supplier()
+	{
+		if ($this->input->is_ajax_request()){
+			$data = [
+				'nama' => $this->input->post('nama_toko'),
+				'alamat' => $this->input->post('alamat'),
+				'nohp' => $this->input->post('no_hp'),
+				'email' => $this->input->post('email'),
+				'web' => $this->input->post('web'),
+				'created_at' => date('Y-m-d H:i:s'),
+				'created_by' => $_SESSION['id']
+			];
+
+			$simpan = $this->Admin_model->add_supplier($data);
+			if($simpan){
+				$arr_data = [
+					'status' => 'sukses',
+					'pesan' => 'Data supplier berhasil disimpan ...'
+				];
+			}else{
+				$arr_data = [
+					'status' => 'gagal',
+					'pesan' => 'Data supplier gagal disimpan ...'
+				];
+			}
+			echo json_encode($arr_data);
+		}else{
+			echo "No direct script access allowed";
+		}
+	}
+
+	public function hapus_supplier(){
+		if ($this->input->is_ajax_request()){
+			$id = $this->input->post('id');
+			$data = [
+				'deleted_by' => $_SESSION['id'],
+				'deleted_at' => date('Y-m-d H:i:s'),
+				'is_delete' => 1
+			];
+			$hapus = $this->Admin_model->delete_supplier($id, $data);
+			if($hapus){
+				$arr_data = [
+					'status' => 'sukses',
+					'pesan' => 'Data supplier berhasil dihapus ...'
+				];
+			}else{
+				$arr_data = [
+					'status' => 'gagal',
+					'pesan' => 'Data supplier gagal dihapus ...'
+				];
+			}
+			echo json_encode($arr_data);
+		}else{
+			echo "No direct script access allowed";
+		}
+
+	}
+
 	public function penjualan()
 	{
 		$data = [

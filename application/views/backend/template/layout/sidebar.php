@@ -91,8 +91,8 @@ $uri2 = $this->uri->segment(2);
 				<li class="menu">
 					<a href="#data-master"
 					   data-toggle="collapse"
-					   data-active="<?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'stok_barang' || $uri2 == 'laporan' || $uri2 == 'belanja_barang') ? 'true' : 'false' ?>"
-					   aria-expanded="<?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'stok_barang' || $uri2 == 'laporan' || $uri2 == 'belanja_barang') ? 'true' : '' ?>"
+					   data-active="<?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'supplier' || $uri2 == 'stok_barang' || $uri2 == 'laporan' || $uri2 == 'belanja_barang') ? 'true' : 'false' ?>"
+					   aria-expanded="<?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'supplier' || $uri2 == 'stok_barang' || $uri2 == 'laporan' || $uri2 == 'belanja_barang') ? 'true' : '' ?>"
 					   class="dropdown-toggle">
 						<div class="">
 							<i data-feather="tool"></i>
@@ -103,19 +103,22 @@ $uri2 = $this->uri->segment(2);
 						</div>
 					</a>
 					<ul id="data-master"
-						class="collapse submenu list-unstyled <?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'stok_barang' || $uri2 == 'laporan' || $uri2 == 'belanja_barang') ? 'show' : '' ?>"
+						class="collapse submenu list-unstyled <?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'supplier' || $uri2 == 'stok_barang' || $uri2 == 'laporan' || $uri2 == 'belanja_barang') ? 'show' : '' ?>"
 						data-parent="#accordionExample">
-						<li class="<?= ($uri2 == 'kategori' || $uri2 == 'jenis') ? 'active' : '' ?>">
+						<li class="<?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'supplier') ? 'active' : '' ?>">
 							<a href="#sm2" data-toggle="collapse" aria-expanded="<?= ($uri2 == 'kategori' || $uri2 == 'jenis') ? 'true' : 'false' ?>" class="dropdown-toggle">
 								Kode Barang
 								<i data-feather="chevron-right"></i>
 							</a>
-							<ul class="collapse list-unstyled sub-submenu <?= ($uri2 == 'kategori' || $uri2 == 'jenis') ? 'show' : '' ?>" id="sm2" data-parent="#data-master">
+							<ul class="collapse list-unstyled sub-submenu <?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'supplier') ? 'show' : '' ?>" id="sm2" data-parent="#data-master">
 								<li class="<?= $uri2 == 'kategori' ? 'active' : '' ?>">
 									<a href="<?= site_url('admin/kategori') ?>"> Kategori </a>
 								</li>
 								<li class="<?= $uri2 == 'jenis' ? 'active' : '' ?>">
 									<a href="<?= site_url('admin/jenis') ?>"> Jenis </a>
+								</li>
+								<li class="<?= $uri2 == 'supplier' ? 'active' : '' ?>">
+									<a href="<?= site_url('admin/supplier') ?>"> Supplier </a>
 								</li>
 							</ul>
 						</li>

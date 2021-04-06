@@ -44,9 +44,21 @@ class Admin_model extends CI_Model {
 		return $this->db->get('jenis');
 	}
 
+	public function add_supplier($data)
+	{
+		return $this->db->insert('supplier', $data);
+	}
+
 	public function get_supplierData()
 	{
+		$this->db->where('is_delete', 0);
 		return $this->db->get('supplier');
+	}
+
+	public function delete_supplier($id, $data)
+	{
+		$this->db->where('id_supp', $id);
+		return $this->db->update('supplier', $data);
 	}
 
 	public function save_data($data)

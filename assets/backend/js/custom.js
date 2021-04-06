@@ -235,6 +235,39 @@ $(document).ready(function() {
 		return false;
 	})
 
+	$('#form-supplier').submit(function (){
+		$.ajax({
+			url: 'tambah_supplier',
+			type: 'post',
+			data: $(this).serialize(),
+			dataType: 'json',
+			cache: false,
+			success: function (data){
+				if(data.status == 'sukses'){
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#8dbf42',
+						pos: 'bottom-right',
+						duration: 3000
+					})
+					setTimeout(function (){
+						location.reload();
+					},3000);
+				}else{
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#e7515a',
+						pos: 'bottom-right',
+						duration: 3000
+					});
+				}
+			}
+		})
+		return false;
+	})
+
 	$('#form-submit-stok').submit(function (e){
 		e.preventDefault();
 		$.ajax({
@@ -308,6 +341,40 @@ $(document).ready(function() {
 		let id = $(this).attr('data-id');
 		$.ajax({
 			url: 'hapus_pembelian',
+			type: 'post',
+			data: {id:id},
+			dataType: 'json',
+			success: function (data){
+				if (data.status == 'sukses'){
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#8dbf42',
+						pos: 'bottom-right',
+						duration: 3000
+					})
+					setTimeout(function (){
+						location.reload();
+					},3000);
+				}else{
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#e7515a',
+						pos: 'bottom-right',
+						duration: 3000
+					});
+				}
+			}
+		})
+		return false;
+	})
+
+	$('#table-supplier').on('click', '#btn-hapus', function (e){
+		e.preventDefault();
+		let id = $(this).attr('data-id');
+		$.ajax({
+			url: 'hapus_supplier',
 			type: 'post',
 			data: {id:id},
 			dataType: 'json',
@@ -416,6 +483,25 @@ $(document).ready(function() {
 	});
 
 	$('#table-jenis').DataTable({
+		"pagingType": "full_numbers",
+		"oLanguage": {
+			"oPaginate": {
+				"sFirst": '<i data-feather="chevron-left"></i>',
+				"sPrevious": '<i data-feather="feather-arrow-left"></i>',
+				"sNext": '<i data-feather="feather-arrow-right"></i>',
+				"sLast": '<i data-feather="feather-chevron-right"></i>'
+			},
+			"sInfo": "Menampilkan hal _PAGE_ of _PAGES_",
+			"sSearch": '<i data-feather="feather-search"></i>',
+			"sSearchPlaceholder": "Cari...",
+			"sLengthMenu": "Filter :  _MENU_",
+		},
+		"stripeClasses": [],
+		"lengthMenu": [5, 10, 15, 20],
+		"pageLength": 5
+	});
+
+	$('#table-supplier').DataTable({
 		"pagingType": "full_numbers",
 		"oLanguage": {
 			"oPaginate": {
