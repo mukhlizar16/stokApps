@@ -48,9 +48,9 @@
 								foreach ($kategori->result_array() as $k) : ?>
 								<tr>
 									<td><?= $no++ ?></td>
-									<td><?= $k['kode_kategori'] ?></td>
-									<td><?= $k['nama_kategori'] ?></td>
-									<td><?= tgl_jam_indo($k['created_at']) ?></td>
+									<td><?= $k['kode'] ?></td>
+									<td><?= $k['nama'] ?></td>
+									<td><?= date('d-m-Y', strtotime($k['tgl_buat'])) ?></td>
 									<td>
 										<button id="btn-hapus" title="Hapus" class="gayaku bs-tooltip" data-id="<?= $k['id'] ?>">
 											<i class="p-1 br-6 mb-1" data-feather="trash"></i>

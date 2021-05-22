@@ -34,55 +34,78 @@
 						<div class="widget-content widget-content-area br-6">
 							<div class="ml-3">
 								<button class="btn btn-primary" aria-expanded="false" aria-controls="collapseForm"
-										data-toggle="collapse" data-target="#form-tambah">Tambah
+										data-toggle="collapse" data-target="#form-tambah">Tambah Pembelian
 								</button>
 							</div>
-							<div id="form-tambah" class="collapse mt-3 mb-3">
-								<div class="col-md-8">
-									<div class="card shadow" style="border-radius: 10px">
+							<div id="form-tambah" class="collapse mt-3 mb-5">
+								<div class="col-md-12">
+									<div class="card shadow-lg">
 										<div class="card-body">
-											<div class="text-center">
-												<h5>Form Tambah Barang</h5>
-												<hr>
-											</div>
-											<form action="<?= site_url('admin/tambah_pembelian') ?>"
-												  method="post"
-												  id="form-stok-pembelian">
-												<div class="form-group row">
-													<label class="required col-form-label col-md-4 text-black" for="tgl">Tanggal
-														pembelian</label>
-													<div class="col-md-8">
-														<input type="date" name="tgl_beli" class="form-control" id="tgl"required>
+											<form id="form-submit-array">
+												<div class="col-md-5">
+													<div class="form-group">
+														<input type="text" name="no_faktur" class="form-control"
+															   placeholder="Nomor Faktur">
+													</div>
+													<div class="form-group">
+														<select class="form-control basic" name="supplier"
+																id="supplier">
+															<option selected="selected">--Pilih Supplier--</option>
+															<?php foreach ($supplier as $s) : ?>
+																<option value="<?= $s['id'] ?>"><?= $s['nama'] ?></option>
+															<?php endforeach; ?>
+														</select>
+													</div>
+													<div class="form-group">
+														<input type="date" class="form-control" name="tgl">
+													</div>
+													<div class="form-group">
+														<select class="form-control" name="" id="mine"></select>
 													</div>
 												</div>
-												<div class="form-group row">
-													<label class="required col-form-label col-md-4 text-black"
-														   for="nama_barang">Nama barang</label>
-													<div class="col-md-8">
-														<input type="text" name="nama_barang" class="form-control"
-															   id="nama_barang" autocomplete="off" required>
+												<div class="col-md-12 mt-2">
+													<span class="text-black mt-3">Data barang :</span>
+													<table id="table-add-pembelian" width="100%">
+														<thead>
+														<tr>
+															<th style="width: 25%">Nama Barang</th>
+															<th width="25%">Jumlah</th>
+															<th width="25%">Harga</th>
+															<th width="15%">Diskon</th>
+															<th width="10%">
+																<button type="button" class="btn btn-sm btn-primary" id="btn-add-row">
+																	<i class="p-1 br-6" data-feather="plus"></i>
+																</button>
+															</th>
+														</tr>
+														</thead>
+														<tbody id="data-target">
+														</tbody>
+													</table>
+												</div>
+												<div class="col-md-8 mt-3">
+													<div class="form-group row">
+														<label for="" class="col-form-label col-md-3 text-black">Diskon
+															Total</label>
+														<div class="col-md-5">
+															<input type="number" class="form-control"
+																   name="diskon-total">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label for="" class="col-form-label col-md-3 text-black">Total
+															Bayar</label>
+														<div class="col-md-5">
+															<input type="number" min="0" class="form-control"
+																   name="total-bayar">
+														</div>
 													</div>
 												</div>
-												<div class="form-group row">
-													<label class="required col-form-label col-md-4 text-black" for="jumlah">Jumlah
-														barang</label>
-													<div class="col-md-8">
-														<input type="text" name="jumlah" class="form-control jumlah"
-															   id="jumlah" required>
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-form-label col-md-4 text-black"
-														   for="supplier">Supplier</label>
-													<div class="col-md-8">
-														<input type="text" name="supplier" class="form-control" id="supplier" required>
-													</div>
-												</div>
-												<div class="mt-5 mb-2 text-center">
-													<button class="btn btn-info" type="submit">Simpan</button>
+
+												<div class="col-md-12">
+													<button class="btn btn-primary" id="btn-simpan">Simpan</button>
 												</div>
 											</form>
-											<p>(<span class="text-danger">*</span>) wajib diisi.</p>
 										</div>
 									</div>
 								</div>
@@ -92,12 +115,12 @@
 								<table id="table-pembelian" class="table table-hover" style="width:100%">
 									<thead>
 									<tr>
-										<th>No</th>
-										<th>Tanggal</th>
-										<th>Nama Barang</th>
+										<th width="5%">No</th>
+										<th width="15%">Tanggal</th>
+										<th width="18%">Nomor Faktur</th>
 										<th>Supplier</th>
-										<th>Total</th>
-										<th>Aksi</th>
+										<th width="15%">Total</th>
+										<th class="text-center" width="10%">Aksi</th>
 									</tr>
 									</thead>
 									<tbody>
@@ -106,12 +129,16 @@
 									foreach ($pembelian as $p) :
 										?>
 										<tr>
-											<td><?= $no++ ?></td>
-											<td><?= tgl_jam_indo($p['tgl_beli']) ?></td>
-											<td><?= $p['nama_barang'] ?></td>
-											<td><?= $p['jlh_barang'] ?></td>
+											<td class="text-center"><?= $no++ ?></td>
+											<td><?= date('d-m-Y', strtotime($p['tgl'])) ?></td>
+											<td><?= $p['no_faktur'] ?></td>
 											<td><?= $p['supplier'] ?></td>
+											<td>Rp. <?= $p['total'] ?></td>
 											<td>
+												<button id="btn-edit" title="Edit data" class="gayaku bs-tooltip"
+														data-id="<?= $p['id'] ?>">
+													<i class="p-1 br-6 mb-1" data-feather="edit"></i>
+												</button>
 												<button id="btn-hapus" title="Hapus" class="gayaku bs-tooltip"
 														data-id="<?= $p['id'] ?>">
 													<i class="p-1 br-6 mb-1" data-feather="trash"></i>

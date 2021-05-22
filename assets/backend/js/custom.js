@@ -311,6 +311,103 @@ $(document).ready(function() {
 			dataType: 'json',
 			cache: false,
 			success: function (data){
+				if (data.status == 'sukses-tambah'){
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#8dbf42',
+						pos: 'bottom-right',
+						duration: 3000
+					})
+					setTimeout(function (){
+						location.reload();
+					},3000);
+				}else if(data.status == 'sukses-update'){
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#8dbf42',
+						pos: 'bottom-right',
+						duration: 3000
+					})
+					setTimeout(function (){
+						location.reload();
+					},3000);
+				}else if(data.status == 'gagal-tambah'){
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#e7515a',
+						pos: 'bottom-right',
+						duration: 3000
+					});
+				}else if (data.status == 'gagal-update'){
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#e7515a',
+						pos: 'bottom-right',
+						duration: 3000
+					});
+				}else{
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#e7515a',
+						pos: 'bottom-right',
+						duration: 3000
+					});
+				}
+			}
+		})
+		return false;
+	})
+
+	// form bahan baku
+	$('#form-bahanbaku').submit(function (e){
+		e.preventDefault();
+		$.ajax({
+			type: 'post',
+			url: 'tambah_bahanbaku',
+			data: $(this).serialize(),
+			dataType: 'json',
+			cache: false,
+			success: function (data){
+				if (data.status == 'sukses'){
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#8dbf42',
+						pos: 'bottom-right',
+						duration: 3000
+					})
+					setTimeout(function (){
+						location.reload();
+					},3000);
+				}else{
+					Snackbar.show({
+						text: data.pesan,
+						actionTextColor: '#fff',
+						backgroundColor: '#e7515a',
+						pos: 'bottom-right',
+						duration: 3000
+					});
+				}
+			}
+		})
+		return false;
+	})
+
+	// form satuan
+	$('#form-satuan').submit(function (e){
+		e.preventDefault();
+		$.ajax({
+			type: 'post',
+			url: 'tambah_satuan',
+			data: $(this).serialize(),
+			dataType: 'json',
+			cache: false,
+			success: function (data){
 				if (data.status == 'sukses'){
 					Snackbar.show({
 						text: data.pesan,
@@ -552,6 +649,33 @@ $(document).ready(function() {
 		buttonup_class: "btn btn-classic btn-primary"
 	});
 
+	$('.myselect').select2({
+		tags: true
+	});
+
+	$('#btn-add-row').click(function (){
+		var html = '';
+		$.ajax({
+			url: 'get_barang',
+			type: 'post',
+			dataType: 'json',
+			success: function (data){
+					html += '<tr>' +
+						'<td><select class="form-control myselect" name="nama[]">';
+						for (var i = 0; i < data.length; i++){
+							html += '<option>'+data[i].nama+'</option>';
+						}
+					html += '</select></td>' +
+							'<td><input class="form-control" type="number" min="0" name="jumlah[]"></td>' +
+							'<td><input class="form-control" type="number" min="0" name="harga[]"></td>' +
+							'<td><input class="form-control" type="number" min="0" name="diskon[]"></td>' +
+							'<td class="text-center"><a href="javascrip:void(0)" id="del-row" class="btn btn-sm btn-secondary"> Hapus</a></td>' +
+							'</tr>';
+				$('#data-target').append(html);
+			}
+		})
+	})
+
 	showImage();
 
 	function showImage(){
@@ -577,4 +701,12 @@ $(document).ready(function() {
 			}
 		})
 	}
+});
+
+/* untuk form select2 */
+var ss = $(".basic").select2({
+	tags: true,
+});
+var ss = $(".second").select2({
+	tags: true,
 });

@@ -14,13 +14,12 @@
 								<select name="kategori" class="form-control" id="kategori">
 									<option value="">--Pilih--</option>
 									<?php foreach ($kategori->result_array() as $k) : ?>
-										<option value="<?= $k['kode_kategori'] ?>"><?= $k['nama_kategori'] ?></option>
+										<option value="<?= $k['id'] ?>"><?= $k['nama'] ?></option>
 									<?php endforeach; ?>
 								</select>
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control" name="nama_jenis" placeholder="Nama Jenis"
-									   required>
+								<input type="text" class="form-control" name="nama_jenis" placeholder="Nama Jenis" required>
 							</div>
 							<div class="mt-4">
 								<button type="submit" class="btn btn-primary mt-3">Tambah</button>
@@ -41,31 +40,29 @@
 						<div class="table-responsive">
 							<table id="table-jenis" class="table dataTable nowrap table-hover">
 								<thead>
-								<tr>
-									<th>No</th>
-									<th>Kode</th>
-									<th>Nama Jenis</th>
-									<th>Tgl Buat</th>
-									<th>Aksi</th>
-								</tr>
+									<tr>
+										<th>No</th>
+										<th>Nama Jenis</th>
+										<th>Tgl Buat</th>
+										<th>Aksi</th>
+									</tr>
 								</thead>
 								<tbody>
-								<?php
+									<?php
 									$no = 1;
 									foreach ($jenis->result_array() as $j) :
-								?>
-									<tr>
-										<td><?= $no++ ?></td>
-										<td><?= $j['kode_kategori']. '.'. $j['id'] ?></td>
-										<td><?= $j['nama_jenis'] ?></td>
-										<td><?= tgl_jam_indo($j['created_at']) ?></td>
-										<td>
-											<button id="btn-hapus" title="Hapus" class="gayaku bs-tooltip" data-id="<?= $k['id'] ?>">
-												<i class="p-1 br-6 mb-1" data-feather="trash"></i>
-											</button>
-										</td>
-									</tr>
-								<?php endforeach; ?>
+									?>
+										<tr>
+											<td><?= $no++ ?></td>
+											<td><?= $j['nama'] ?></td>
+											<td><?= date('d-m-Y', strtotime($j['tgl_buat'])) ?></td>
+											<td>
+												<button id="btn-hapus" title="Hapus" class="gayaku bs-tooltip" data-id="<?= $k['id'] ?>">
+													<i class="p-1 br-6 mb-1" data-feather="trash"></i>
+												</button>
+											</td>
+										</tr>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>

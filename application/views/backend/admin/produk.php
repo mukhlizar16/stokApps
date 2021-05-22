@@ -68,7 +68,7 @@
 							?>
 							<tr>
 								<td><?= $no++ ?></td>
-								<td><?= $item['nama_produk'] ?></td>
+								<td><?= $item['nama'] ?></td>
 								<td><?= $item['kategori'] ?></td>
 								<td><?= $item['jenis'] ?></td>
 								<td><?= $item['deskripsi'] ?></td>

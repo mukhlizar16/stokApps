@@ -7,7 +7,7 @@
 				</a>
 			</li>
 			<li class="nav-item theme-text">
-				<a href="#" class="nav-link"> CORK </a>
+				<a href="#" class="nav-link"> MIE SYABAB </a>
 			</li>
 		</ul>
 		<ul class="navbar-item flex-row ml-md-0 ml-auto">

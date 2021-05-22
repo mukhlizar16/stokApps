@@ -103,7 +103,7 @@ $uri2 = $this->uri->segment(2);
 						</div>
 					</a>
 					<ul id="data-master"
-						class="collapse submenu list-unstyled <?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'supplier' || $uri2 == 'stok_barang' || $uri2 == 'laporan' || $uri2 == 'belanja_barang') ? 'show' : '' ?>"
+						class="collapse submenu list-unstyled <?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'supplier' || $uri2 == 'stok_barang' || $uri2 == 'laporan' || $uri2 == 'bahan_baku' || $uri2 == 'satuan') ? 'show' : '' ?>"
 						data-parent="#accordionExample">
 						<li class="<?= ($uri2 == 'kategori' || $uri2 == 'jenis' || $uri2 == 'supplier') ? 'active' : '' ?>">
 							<a href="#sm2" data-toggle="collapse" aria-expanded="<?= ($uri2 == 'kategori' || $uri2 == 'jenis') ? 'true' : 'false' ?>" class="dropdown-toggle">
@@ -128,8 +128,11 @@ $uri2 = $this->uri->segment(2);
 						<li class="<?= $uri2 == 'laporan' ? 'active' : '' ?>">
 							<a href="<?= base_url('admin/laporan') ?>"> laporan </a>
 						</li>
-						<li class="<?= $uri2 == 'belanja_barang' ? 'active' : '' ?>">
-							<a href="<?= base_url('admin/belanja_barang') ?>"> Belanja Barang </a>
+						<li class="<?= $uri2 == 'bahan_baku' ? 'active' : '' ?>">
+							<a href="<?= base_url('admin/bahan_baku') ?>"> Bahan Baku </a>
+						</li>
+						<li class="<?= $uri2 == 'satuan' ? 'active' : '' ?>">
+							<a href="<?= base_url('admin/satuan') ?>"> Satuan </a>
 						</li>
 					</ul>
 				</li>

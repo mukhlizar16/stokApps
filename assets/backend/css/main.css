@@ -402,6 +402,11 @@ select.form-control.form-custom {
 	color: grey;
 }
 
+#table-add-pembelian th {
+	border: 1px solid grey;
+	text-align: center;
+}
+
 .btn {
   padding: 0.4375rem 1.25rem;
   text-shadow: none;

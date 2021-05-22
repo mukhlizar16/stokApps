@@ -16,6 +16,7 @@
 <link href="<?= base_url() ?>assets/backend/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
 <link href="<?= base_url() ?>assets/backend/plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css">
 <link href="<?= base_url() ?>assets/backend/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/backend/plugins/select2/select2.min.css">
 <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
 <!-- start: datatables -->

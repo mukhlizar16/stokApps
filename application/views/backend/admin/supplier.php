@@ -10,36 +10,16 @@
 					<div class="user-info">
 						<form id="form-supplier">
 							<div class="form-group">
-								<input type="text" class="form-control"
-									   name="nama_toko"
-									   id="nama_toko"
-									   placeholder="Nama Toko" required>
+								<input type="text" class="form-control" name="nama_toko" id="nama_toko" placeholder="Nama Toko" required>
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control"
-									   name="alamat"
-									   id="alamat"
-									   placeholder="Alamat"
-									   required>
+								<input type="text" class="form-control" name="alamat" id="alamat" placeholder="Alamat" required>
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control"
-									   name="no_hp"
-									   id="no_hp"
-									   placeholder="No HP"
-									   required>
+								<input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="No HP" required>
 							</div>
 							<div class="form-group">
-								<input type="email" class="form-control"
-									   name="email"
-									   id="email"
-									   placeholder="Email">
-							</div>
-							<div class="form-group">
-								<input type="text" class="form-control"
-									   name="web"
-									   id="web"
-									   placeholder="Alamat web">
+								<input type="email" class="form-control" name="email" id="email" placeholder="Email">
 							</div>
 							<div class="mt-4">
 								<button type="submit" class="btn btn-primary mt-3">Tambah</button>
@@ -60,35 +40,33 @@
 						<div class="table-responsive">
 							<table id="table-supplier" class="table dataTable nowrap table-hover">
 								<thead>
-								<tr>
-									<th>No</th>
-									<th>Nama Toko</th>
-									<th>Nomor HP</th>
-									<th>Email</th>
-									<th>Web</th>
-									<th>Alamat</th>
-									<th>Aksi</th>
-								</tr>
+									<tr>
+										<th>No</th>
+										<th>Nama Toko</th>
+										<th>Nomor HP</th>
+										<th>Email</th>
+										<th>Alamat</th>
+										<th>Aksi</th>
+									</tr>
 								</thead>
 								<tbody>
-								<?php
-								$no = 1;
-								foreach ($supplier->result_array() as $s) :
-								?>
-								<tr>
-									<td><?= $no++ ?></td>
-									<td><?= $s['nama'] ?></td>
-									<td><?= $s['nohp'] ?></td>
-									<td><?= $s['email'] ? : '--' ?></td>
-									<td><?= $s['web'] ? : '--' ?></td>
-									<td><?= $s['alamat'] ?></td>
-									<td>
-										<button id="btn-hapus" title="Hapus" class="gayaku bs-tooltip" data-id="<?= $s['id_supp'] ?>">
-											<i class="p-1 br-6 mb-1" data-feather="trash"></i>
-										</button>
-									</td>
-								</tr>
-								<?php endforeach; ?>
+									<?php
+									$no = 1;
+									foreach ($supplier->result_array() as $s) :
+									?>
+										<tr>
+											<td><?= $no++ ?></td>
+											<td><?= $s['nama'] ?></td>
+											<td><?= $s['telp'] ?></td>
+											<td><?= $s['email'] ?: '--' ?></td>
+											<td><?= $s['alamat'] ?></td>
+											<td>
+												<button id="btn-hapus" title="Hapus" class="gayaku bs-tooltip" data-id="<?= $s['id'] ?>">
+													<i class="p-1 br-6 mb-1" data-feather="trash"></i>
+												</button>
+											</td>
+										</tr>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>

@@ -5,8 +5,8 @@
 <script src="<?= base_url() ?>assets/backend/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="<?= base_url() ?>assets/backend/plugins/font-icons/feather/feather.min.js"></script>
 <script src="<?= base_url() ?>assets/backend/plugins/notification/snackbar/snackbar.min.js"></script>
+<script src="<?= base_url() ?>assets/backend/plugins/select2/select2.min.js"></script>
 <script src="<?= base_url() ?>assets/backend/js/app.js"></script>
-<script src="<?= base_url() ?>assets/backend/js/custom.js"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
@@ -20,7 +20,8 @@
 
 <script src="<?= base_url() ?>assets/backend/js/scrollspyNav.js"></script>
 <script src="<?= base_url() ?>assets/backend/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="<?= base_url() ?>assets/backend/js/custom.js"></script>
 
 <script>
-	feather.replace()
+	feather.replace();
 </script>
