@@ -72,17 +72,31 @@ class Admin_model extends CI_Model
 
 	public function save_data($data)
 	{
-		return $this->db->insert('stok_barang', $data);
+		$this->db->insert('bahan_baku', $data);
+		$datastok = [
+			'barang_id' => $this->db->insert_id(),
+			'jumlah' => 0,
+			'tanggal' => date('Y-m-d H:i:s')
+		];
+		return $this->db->insert('stok_bahan_baku', $datastok);
+
 	}
 
 	public function get_bahan_data()
 	{
+		$this->db->order_by('nama', 'ASC');
 		return $this->db->get('bahan_baku');
 	}
 
 	public function save_pembelian($data)
 	{
 		return $this->db->insert('pembelian', $data);
+
+	}
+
+	public function save_pembelian_detail($datadetail)
+	{
+		return $this->db->insert_batch('pembelian_detail', $datadetail);
 	}
 
 	public function cek_stokData($id_barang)
@@ -140,5 +154,41 @@ class Admin_model extends CI_Model
 	public function save_bahanbaku($data)
 	{
 		return $this->db->insert('bahan_baku', $data);
+	}
+
+	public function get_bahanbakuData()
+	{
+		$this->db->select('b.nama as nama, b.id as id, s.nama as satuan, b.tgl_buat as tgl');
+		$this->db->from('bahan_baku as b');
+		$this->db->join('satuan as s', 's.id = b.satuan_id', 'left');
+		$this->db->order_by('nama', 'ASC');
+		return $this->db->get();
+	}
+
+	public function get_stok()
+	{
+		$this->db->select('s.id, s.jumlah as jumlah, b.nama as barang, s.tanggal as tgl, t.nama as satuan');
+		$this->db->from('stok_bahan_baku as s');
+		$this->db->join('bahan_baku as b', 'b.id = s.barang_id', 'left');
+		$this->db->join('satuan as t', 't.id = b.satuan_id', 'left');
+		return $this->db->get();
+	}
+
+	public function get_level_data()
+	{
+		return $this->db->get('level');
+	}
+
+	public function save_level($data)
+	{
+		return $this->db->insert('level', $data);
+	}
+
+	public function delete_level_data($id)
+	{
+		$this->db->delete('level', ['id' => $id]);
+		return $this->db->query('
+				ALTER TABLE level AUTO_INCREMENT = 1
+				');
 	}
 }

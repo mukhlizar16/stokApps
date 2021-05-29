@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin extends CI_Controller
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -201,7 +200,6 @@ class Admin extends CI_Controller
 		}
 	}
 
-
 	public function produksi()
 	{
 		$data = [
@@ -249,68 +247,62 @@ class Admin extends CI_Controller
 
 	public function tambah_pembelian()
 	{
-		$diskon = $this->input->post('diskon');
-		$jumlah = $this->input->post('jumlah');
-		$harga = $this->input->post('harga');
+		$this->form_validation->set_rules('no_faktur', 'Nomor Faktur', 'required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+		$this->form_validation->set_rules('supplier', 'Supplier', 'required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+		$this->form_validation->set_rules('diskon_total', 'Total Diskon', 'required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+		$this->form_validation->set_rules('total_bayar', 'Total Pembayaran', 'required', [
+			'required' => '%s tidak boleh kosong'
+		]);
 
-		$data = [
-			'tgl_beli' => $this->input->post('tgl_beli'),
-			'barang_id' => $this->input->post('nm_barang'),
-			'no_faktur' => $this->input->post('faktur'),
-			'jumlah_beli' => $jumlah,
-			'supplier_id' => $this->input->post('supplier'),
-			'harga_beli' => $harga,
-			'total' => ($jumlah * $harga) - (($diskon / 100) * $jumlah * $harga),
-			'diskon' => $diskon,
-			'user_id' => $_SESSION['id']
-		];
-
-		$simpan = $this->Admin_model->save_pembelian($data);
-		if ($simpan) {
-			$id_barang = $this->input->post('nm_barang');
-			$cek_stok = $this->Admin_model->cek_stokData($id_barang)->row_array();
-
-			if ($cek_stok == null){
-				$datastok = [
-					'barang_id' => $id_barang,
-					'jumlah' => $jumlah,
-					'tanggal' => date('Y-m-d H:i:s')
-				];
-				$simpanstok = $this->Admin_model->add_stok($datastok);
-				if ($simpanstok){
-					$arr_data = [
-						'status' => 'sukses-tambah',
-						'pesan' => 'Data pembelian dan stok berhasil ditambah ...'
-					];
-				}else{
-					$arr_data = [
-						'status' => 'gagal-tambah',
-						'pesan' => 'Data pembelian dan stok gagal ditambah ...'
-					];
-				}
-			}else{
-				$jumlah_awal = $cek_stok['jumlah'];
-				$jumlah_akhir = $jumlah + $jumlah_awal;
-				$update = $this->Admin_model->update_stok($id_barang, $jumlah_akhir);
-				if ($update){
-					$arr_data = [
-						'status' => 'sukses-update',
-						'pesan' => 'Data berhasil disimpan dan update stok ...'
-					];
-				}else{
-					$arr_data = [
-						'status' => 'gagal-update',
-						'pesan' => 'Data berhasil disimpan tetapi gagal update stok ...'
-					];
-				}
-			}
-		} else {
+		if ($this->form_validation->run() == false){
 			$arr_data = [
-				'status' => 'gagal',
-				'pesan' => 'Data gagal disimpan dan gagal update...'
+				'status' => 'fail',
+				'pesan' => validation_errors()
 			];
+		}else{
+			$diskon = $this->input->post('diskon_total');
+			$bayar = $this->input->post('total_bayar');
+			$databeli = [
+				'user_id' => $_SESSION['id'],
+				'no_faktur' => $this->input->post('no_faktur'),
+				'supplier_id' => $this->input->post('supplier'),
+				'diskon' => $diskon,
+				'total' => $bayar - ($bayar * ($diskon/100)),
+				'tgl_beli' => date('Y-m-d H:i:s')
+			];
+
+			foreach ($_POST['faktur'] as $row => $val)
+			{
+				$datadetail[] = array(
+					'no_faktur' => $_POST['faktur'][$row],
+					'barang_id' => $_POST['barang'][$row],
+					'jumlah' => $_POST['jumlah'][$row],
+					'harga' => $_POST['harga'][$row]
+				);
+			}
+
+			$simpanarray = $this->Admin_model->save_pembelian_detail($datadetail);
+			$simpan = $this->Admin_model->save_pembelian($databeli);
+			if($simpanarray && $simpan){
+				$arr_data = [
+					'status' => 'sukses-tambah',
+					'pesan' => 'Sukses! data berhasil ditambah'
+				];
+			}else{
+				$arr_data = [
+					'status' => 'gagal-tambah',
+					'pesan' => 'Gagal! data belum berhasil ditambah'
+				];
+			}
+
 		}
-		echo json_encode($arr_data);
+			echo json_encode($arr_data);
 	}
 
 	public function hapus_pembelian()
@@ -336,29 +328,25 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function stok_barang()
+	public function bahan_baku()
 	{
 		$data = [
 			'title' => 'Admin / Stok Barang',
 			'breadcrumb' => 'Stok Barang'
 		];
 
-		$data['kategori'] = $this->Admin_model->get_kategoriData();
-		$data['jenis'] = $this->Admin_model->get_jenisData();
-		$data['supplier'] = $this->Admin_model->get_supplierData();
+		$data['satuan'] = $this->Admin_model->get_dataSatuan();
+		$data['bahan'] = $this->Admin_model->get_bahanbakuData();
 
-		$this->template->load('backend/template/master', 'backend/admin/stok-barang', $data, false);
+		$this->template->load('backend/template/master', 'backend/admin/bahan-baku', $data, false);
 	}
 
-	public function tambah_stok()
+	public function tambah_bahan_baku()
 	{
 		$data = [
-			'kategori_id' => $this->input->post('kategori'),
-			'jenis_id' => $this->input->post('jenis'),
-			'nama_barang' => $this->input->post('nama_barang'),
-			'supplier_id' => $this->input->post('supplier'),
-			'jumlah' => $this->input->post('jumlah'),
-			'created_at' => date('Y-m-d H:i:s')
+			'nama' => $this->input->post('nm_barang'),
+			'satuan_id' => $this->input->post('satuan'),
+			'tgl_buat' => date('Y-m-d H:i:s')
 		];
 
 		$simpan = $this->Admin_model->save_data($data);
@@ -376,15 +364,15 @@ class Admin extends CI_Controller
 		echo json_encode($arr_data);
 	}
 
-	public function bahan_baku()
+	public function stok_bahan_baku()
 	{
 		$data = [
 			'title' => 'Admin / Belanja Barang',
 			'breadcrumb' => 'Belanja Barang',
-			'bahan' => $this->Admin_model->get_bahanbaku()
+			'stok' => $this->Admin_model->get_stok()
 		];
 
-		$this->template->load('backend/template/master', 'backend/admin/bahan-baku', $data, false);
+		$this->template->load('backend/template/master', 'backend/admin/stok-bahan-baku', $data, false);
 	}
 
 	public function tambah_bahanbaku()
@@ -450,6 +438,69 @@ class Admin extends CI_Controller
 			}
 			echo json_encode($arr_data);
 		} else {
+			echo "No direct script access allowed";
+		}
+	}
+
+	public function level()
+	{
+		$data = [
+			'title' => 'Admin - Level User',
+			'breadcrumb' => 'Level User'
+		];
+
+		$data['level'] = $this->Admin_model->get_level_data();
+
+		$this->template->load('backend/template/master', 'backend/admin/level-user', $data, false);
+	}
+
+	public function tambah_level()
+	{
+		if ($this->input->is_ajax_request()){
+			$data = [
+				'nama_level' => $this->input->post('level'),
+				'created_at' => date('Y-m-d H:i:s')
+			];
+
+			$simpan = $this->Admin_model->save_level($data);
+
+			if ($simpan){
+				$arr_data = [
+					'status' => 'sukses',
+					'pesan' => 'Sukses! Data level berhasil disimpan ...'
+				];
+			}else{
+				$arr_data = [
+					'status' => 'gagal',
+					'pesan' => 'Gagal! Data level tidak berhasil disimpan ...'
+				];
+			}
+			echo json_encode($arr_data);
+		}else{
+			echo "No direct script access allowed";
+		}
+	}
+
+	public function hapus_level()
+	{
+		if ($this->input->is_ajax_request()){
+			$id = $this->input->post('id');
+
+			$hapus = $this->Admin_model->delete_level_data($id);
+
+			if ($hapus){
+				$arr_data = [
+					'status' => 'sukses',
+					'pesan' => 'Sukses! Data level berhasil dihapus ...'
+				];
+			}else{
+				$arr_data = [
+					'status' => 'gagal',
+					'pesan' => 'Gagal! Data level tidak berhasil dihapus ...'
+				];
+			}
+			echo json_encode($arr_data);
+		}else{
 			echo "No direct script access allowed";
 		}
 	}

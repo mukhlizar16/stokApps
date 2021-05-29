@@ -12,7 +12,7 @@
 								<form>
 									<div class="form-group mb-4">
 										<label for="namaproduk">Nama Produk *</label>
-										<input type="text" class="form-control" id="namaproduk" placeholder="">
+										<input type="text" class="form-control" id="namaproduk" name="produk">
 									</div>
 									<div class="form-group">
 										<label for="">Kategori *</label>

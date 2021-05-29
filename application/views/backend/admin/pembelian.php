@@ -42,39 +42,53 @@
 									<div class="card shadow-lg">
 										<div class="card-body">
 											<form id="form-submit-array">
+												<div class="alert alert-danger mb-3">
+													<span>
+														<i class="text-danger" data-feather="alert-triangle"></i>
+														Note : Isilah bidang <strong class="text-black">Nomor Faktur</strong>
+														terlebih dahulu.
+													</span>
+												</div>
 												<div class="col-md-5">
 													<div class="form-group">
-														<input type="text" name="no_faktur" class="form-control"
-															   placeholder="Nomor Faktur">
+														<input type="text"
+															   name="no_faktur"
+															   class="form-control"
+															   placeholder="Nomor Faktur"
+															   id="no_faktur"
+															   value="<?= set_value('no_faktur') ?>"
+															   autofocus>
 													</div>
 													<div class="form-group">
 														<select class="form-control basic" name="supplier"
 																id="supplier">
-															<option selected="selected">--Pilih Supplier--</option>
+															<option selected="selected" value="">--Pilih Supplier--
+															</option>
 															<?php foreach ($supplier as $s) : ?>
 																<option value="<?= $s['id'] ?>"><?= $s['nama'] ?></option>
 															<?php endforeach; ?>
 														</select>
 													</div>
-													<div class="form-group">
-														<input type="date" class="form-control" name="tgl">
-													</div>
-													<div class="form-group">
-														<select class="form-control" name="" id="mine"></select>
-													</div>
 												</div>
 												<div class="col-md-12 mt-2">
+													<div class="form-group text-black">
+														<h6 style="font-weight: bold">
+															<i data-feather="clock" style="color: limegreen"></i>
+															&nbsp;<?= date('d-m-Y H:i:s') ?></h6>
+													</div>
 													<span class="text-black mt-3">Data barang :</span>
 													<table id="table-add-pembelian" width="100%">
 														<thead>
 														<tr>
-															<th style="width: 25%">Nama Barang</th>
-															<th width="25%">Jumlah</th>
-															<th width="25%">Harga</th>
-															<th width="15%">Diskon</th>
-															<th width="10%">
-																<button type="button" class="btn btn-sm btn-primary" id="btn-add-row">
-																	<i class="p-1 br-6" data-feather="plus"></i>
+															<th width="25%">Nama Barang</th>
+															<th width="20%">Jumlah</th>
+															<th width="20%">Harga Satuan</th>
+															<th width="20%">Total</th>
+															<th width="5%">
+																<button type="button" title="tambah"
+																		class="gayaku bs-tooltip" id="btn-add-row">
+																	<i class="p-1 mb-1 br-6 icon-tambah"
+																	   data-feather="plus-circle"></i>
 																</button>
 															</th>
 														</tr>
@@ -89,7 +103,7 @@
 															Total</label>
 														<div class="col-md-5">
 															<input type="number" class="form-control"
-																   name="diskon-total">
+																   name="diskon_total">
 														</div>
 													</div>
 													<div class="form-group row">
@@ -97,7 +111,7 @@
 															Bayar</label>
 														<div class="col-md-5">
 															<input type="number" min="0" class="form-control"
-																   name="total-bayar">
+																   name="total_bayar" id="total_bayar">
 														</div>
 													</div>
 												</div>

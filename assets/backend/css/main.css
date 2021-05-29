@@ -402,6 +402,19 @@ select.form-control.form-custom {
 	color: grey;
 }
 
+.icon-hapus {
+	color: red;
+}
+
+.icon-tambah {
+	color: blue;
+	transition: 0.5s ease;
+}
+
+.icon-tambah:hover {
+	margin-top: -3px;
+}
+
 #table-add-pembelian th {
 	border: 1px solid grey;
 	text-align: center;

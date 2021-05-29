@@ -10,6 +10,9 @@
 <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 <link href="<?= base_url() ?>assets/backend/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url() ?>assets/backend/css/plugins.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="<?= base_url() ?>assets/backend/plugins/font-icons/fontawesome/css/regular.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/backend/plugins/font-icons/fontawesome/css/fontawesome.css">
+
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
